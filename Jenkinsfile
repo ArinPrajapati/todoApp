@@ -43,17 +43,21 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy Locally') {
             steps {
-                sh 'scp -r dist/* user@server:/var/www/html'
+                sh '''
+                npm install -g serve
+                serve -s dist -l $APP_PORT &
+                echo "✅ App is running at http://localhost:$APP_PORT"
+                '''
             }
         }
     }
 
     post {
         success {
-            echo '✅ React App is successfully deployed!'
-            echo '🌍 Visit: http://your-server-ip:3000'
+            echo '✅ React App is successfully deployed locally!'
+            echo "🌍 Visit: http://localhost:$APP_PORT"
         }
         failure {
             echo '❌ Deployment Failed! Check logs for details.'
