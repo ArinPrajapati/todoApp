@@ -28,7 +28,7 @@ pipeline {
             }
         }
 
-        stage('Fake Test Stage') {
+        stage('Test Stage') {
             steps {
                 sh '''
                 echo "Running tests..."
